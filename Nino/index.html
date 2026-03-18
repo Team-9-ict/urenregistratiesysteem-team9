@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factuur Beheer Systeem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-logo">FactuurPro Home</div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="facturen.html">Facturen</a></li>
+        <li><a href="id-beheer.html">ID Overzicht</a></li>
+        <li><a href="status.html">Betaalstatus</a></li>
+    </ul>
+</nav>
+
+    <header class="hero">
+        <h1>Welkom bij het Factuur Dashboard</h1>
+        <p>Beheer eenvoudig je administratie, vervaldatums en btw-tarieven op één plek.</p>
+        <a href="facturen.html" class="btn-main">Bekijk Facturen</a>
+    </header>
+
+    <main class="container" id="facturen">
+        <h2>Factuuroverzicht</h2>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Opdracht ID</th>
+                        <th>Factuurdatum</th>
+                        <th>Totaalbedrag</th>
+                        <th>Btw-Tarief</th>
+                        <th>Betaalstatus</th>
+                        <th>Vervaldatum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INV-001</td>
+                        <td>ORD-2026-01</td>
+                        <td>27-01-2026</td>
+                        <td>€ 1.210,00</td>
+                        <td>21%</td>
+                        <td><span class="status betaald">Betaald</span></td>
+                        <td>27-01-2027</td>
+                    </tr>
+                    <tr>
+                        <td>INV-002</td>
+                        <td>ORD-2026-02</td>
+                        <td>05-02-2026</td>
+                        <td>€ 450,00</td>
+                        <td>9%</td>
+                        <td><span class="status openstaand">Openstaand</span></td>
+                        <td>05-02-2027</td>
+                    </tr>
+                    <tr>
+                   <td>INV-003</td>
+                        <td>ORD-2025-03</td>
+                        <td>11-03-2025</td>
+                        <td>€ 450,00</td>
+                        <td>9%</td>
+                    <td><span class="status te-laat">Te Laat</span></td>
+                        <td>11-03-2026</td>
+                </tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>
