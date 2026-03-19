@@ -1,8 +1,5 @@
 <?php
-// 1. Verbinding maken met de database
 require 'db_config.php';
-
-// 2. Data ophalen (voor de tabel)
 try {
     $stmt = $pdo->query("SELECT * FROM Opdrachten ORDER BY Aanvraagdatum DESC");
     $opdrachten = $stmt->fetchAll();
@@ -21,8 +18,6 @@ try {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-
-    <!-- Navigatie -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">TEAM9<strong> URSysteem</strong></div>
@@ -44,7 +39,6 @@ try {
             </div>
         </div>
 
-        <!-- Formulier Sectie (Verwijst naar add.php) -->
         <div class="form-card" id="formSection" style="display: none;">
             <h3>Nieuwe Opdracht Toevoegen</h3>
             <form action="add.php" method="POST">
@@ -58,7 +52,6 @@ try {
             </form>
         </div>
 
-        <!-- Tabel met Database Gegevens -->
         <div class="table-card">
             <div class="table-header">
                 <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Zoek in alle velden...">
@@ -100,7 +93,6 @@ try {
     </div>
 
     <script>
-        // 1. Zoekfunctie (Client-side filtering)
         function filterTable() {
             const filter = document.getElementById('searchInput').value.toLowerCase();
             const rows = document.querySelectorAll('#mainTable tbody tr');
@@ -111,13 +103,11 @@ try {
             });
         }
 
-        // 2. Formulier Tonen/Verbergen
         function toggleForm() {
             const f = document.getElementById('formSection');
             f.style.display = (f.style.display === 'none') ? 'block' : 'none';
         }
 
-        // 3. PDF Genereren van de container
         function generatePDF() {
             const element = document.getElementById('printableArea');
             const opt = {
