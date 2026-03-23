@@ -1,39 +1,27 @@
-/* lightmode en accent */
+/* Globale reset voor correcte breedteberekening */
+* {
+    box-sizing: border-box;
+}
+
 :root {
-    --bg-body: #f1f5f9;
-    --bg-card: #ffffff;
-    --text-main: #1e293b;
-    --text-muted: #64748b;
-    --border: #e2e8f0;
+    --bg-body: #0f172a;
+    --bg-card: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
     --primary: #10b981;
     --primary-hover: #059669;
-    --nav-bg: #ffffff;
-    --input-bg: #ffffff;
-    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --nav-bg: #1e293b;
+    --input-bg: #0f172a;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     --danger: #ef4444;
 }
 
-/* dark mode*/
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg-body: #0f172a;
-        --bg-card: #1e293b;
-        --text-main: #f8fafc;
-        --text-muted: #94a3b8;
-        --border: #334155;
-        --nav-bg: #1e293b;
-        --input-bg: #0f172a;
-        --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-}
-
-/* algemeen */
 body {
-    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     margin: 0;
     background-color: var(--bg-body);
     color: var(--text-main);
-    transition: background-color 0.3s ease, color 0.3s ease;
     line-height: 1.5;
 }
 
@@ -42,9 +30,6 @@ body {
     background: var(--nav-bg);
     border-bottom: 1px solid var(--border);
     padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .nav-container {
@@ -56,34 +41,16 @@ body {
     padding: 0 20px;
 }
 
-.logo {
-    font-size: 1.25rem;
-    font-weight: 500;
-    letter-spacing: -0.5px;
-}
+.logo strong { color: var(--primary); }
+.nav-links a { text-decoration: none; color: var(--text-muted); margin-left: 20px; transition: 0.2s; }
+.nav-links a.active { color: var(--primary); font-weight: bold; }
+.nav-links a:hover { color: var(--primary); }
 
-.logo strong {
-    color: var(--primary);
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-muted);
-    margin-left: 20px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.2s;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    color: var(--primary);
-}
-
-/* Layout Container */
-.container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
+/* Layout */
+.container { 
+    max-width: 1200px; 
+    margin: 40px auto; 
+    padding: 0 20px; 
 }
 
 .header-section {
@@ -93,167 +60,109 @@ body {
     margin-bottom: 2rem;
 }
 
-h1 {
-    font-size: 1.85rem;
-    margin: 0;
-    font-weight: 600;
-}
-
 /* Kaarten */
 .table-card, .form-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     box-shadow: var(--shadow);
-    overflow: hidden;
     margin-bottom: 2rem;
+    width: 100%;
 }
 
-.form-card {
-    padding: 24px;
-}
+.form-card { padding: 24px; }
 
-.form-card h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.1rem;
+.table-header {
+    padding: 24px 24px 10px 24px;
 }
 
 /* Formulier Grid */
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
 }
 
+/* Inputs */
 input {
+    width: 100%;
     background: var(--input-bg);
-    color: var(--text-main);
+    border: 1px solid var(--border);
+    color: white;
     padding: 12px;
-    border: 1px solid var(--border);
     border-radius: 8px;
-    font-size: 0.9rem;
     outline: none;
-    transition: border-color 0.2s;
+    transition: 0.2s;
 }
 
-input:focus {
-    border-color: var(--primary);
+input:focus { border-color: var(--primary); }
+
+input#searchInput {
+    margin-bottom: 10px;
 }
 
-/* Tabel Styling */
-.table-header {
-    padding: 16px;
+/* Tabel styling */
+#pdf-content {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    min-width: 800px;
+}
+
+th { 
+    text-align: left; 
+    padding: 14px 20px; 
+    color: var(--text-muted); 
+    text-transform: uppercase; 
+    font-size: 0.75rem; 
     border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.05);
 }
 
-#searchInput {
-    width: 100%;
-    box-sizing: border-box;
+td { 
+    padding: 16px 20px; 
+    border-bottom: 1px solid var(--border); 
+    font-size: 0.9rem; 
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+tr:hover { background: rgba(255,255,255,0.02); }
 
-th {
-    background: var(--bg-body);
-    text-align: left;
-    padding: 14px 20px;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-td {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-}
-
-tr:hover {
-    background-color: rgba(16, 185, 129, 0.03);
-}
-
-/* Knoppen */
-.action-buttons {
-    display: flex;
-    gap: 12px;
-}
-
-button {
-    font-family: inherit;
-    font-weight: 500;
-    font-size: 0.9rem;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    border: none;
-}
-
-.btn-primary:hover {
-    background: var(--primary-hover);
-}
-
-.btn-secondary {
-    background: var(--bg-card);
-    color: var(--text-main);
-    border: 1px solid var(--border);
-}
-
-.btn-save {
-    background: var(--primary);
-    color: white;
-    border: none;
-    margin-top: 20px;
-    width: 100%;
-    padding: 14px;
-}
-
-/* Wijzig en Wis Knoppen in Tabel */
-.action-cell {
-    display: flex;
-    gap: 8px;
-}
-
-.btn-edit {
-    background: var(--primary);
-    color: white !important;
-    padding: 6px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.btn-delete {
-    background: var(--danger);
-    color: white !important;
-    padding: 6px 12px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.btn-edit:hover, .btn-delete:hover {
-    opacity: 0.85;
-}
-
-/* Badges */
+/* Knoppen & Badges */
 .badge {
     background: rgba(16, 185, 129, 0.1);
     color: var(--primary);
     padding: 4px 10px;
     border-radius: 6px;
-    font-size: 0.8rem;
     font-weight: 600;
+    white-space: nowrap;      
+    display: inline-block;     
+    width: fit-content;        
 }
+
+.action-buttons { display: flex; gap: 10px; }
+
+.btn-primary { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-secondary { background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.btn-save { background: var(--primary); color: white; border: none; width: 100%; padding: 14px; margin-top: 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+
+.action-cell-flex {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white !important;
+}
+
+.btn-edit { background-color: var(--primary); }
+.btn-delete { background-color: var(--danger); }
+.btn-edit:hover, .btn-delete:hover { opacity: 0.8; }
