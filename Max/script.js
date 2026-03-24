@@ -4,6 +4,15 @@ function searchTable() {
     rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val) ? "" : "none");
 }
 
+function toggleForm() {
+    const form = document.getElementById("addForm");
+    if (form.style.display === "none") {
+        form.style.display = "block";
+    } else {
+        form.style.display = "none";
+    }
+}
+
 function generatePDF() {
     const el = document.getElementById('pdf-content');
     const pdfStyle = document.createElement('style');
@@ -17,7 +26,8 @@ function generatePDF() {
     document.head.appendChild(pdfStyle);
 
     html2pdf().set({
-        margin: 10, filename: 'export.pdf', 
+        margin: 10, 
+        filename: 'export.pdf', 
         html2canvas: { scale: 2, backgroundColor: '#ffffff' },
         jsPDF: { orientation: 'landscape' }
     }).from(el).save().then(() => document.getElementById('pdf-fix').remove());

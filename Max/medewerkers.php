@@ -1,22 +1,26 @@
 <?php
 include 'config.php';
 
-// Verwerken van formulier data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $v = $_POST['voornaam'];
-    $t = $_POST['tussenvoegsel'];
-    $a = $_POST['achternaam'];
-    $g = $_POST['geboortedatum'];
-    $f = $_POST['functie'];
-    $m = $_POST['werkmail'];
-    $k = $_POST['kantoor'];
+    $v = $conn->real_escape_string($_POST['voornaam']);
+    $t = $conn->real_escape_string($_POST['tussenvoegsel']);
+    $a = $conn->real_escape_string($_POST['achternaam']);
+    $g = $conn->real_escape_string($_POST['geboortedatum']);
+    $f = $conn->real_escape_string($_POST['functie']);
+    $m = $conn->real_escape_string($_POST['werkmail']);
+    $k = $conn->real_escape_string($_POST['kantoor']);
 
+    // Let op: Ik gebruik hier 'Kantoorruimte', check of dit klopt met je database!
     $sql = "INSERT INTO medewerkers (Voornaam, Tussenvoegsel, Achternaam, Geboortedatum, Functie, Werkmail, Kantoorruimte) 
             VALUES ('$v', '$t', '$a', '$g', '$f', '$m', '$k')";
     
-    $conn->query($sql);
-    header("Location: medewerkers.php");
-    exit();
+    if ($conn->query($sql)) {
+        header("Location: medewerkers.php");
+        exit();
+    } else {
+        // Dit laat zien wat er mis gaat
+        die("Fout in database: " . $conn->error);
+    }
 }
 ?>
 
