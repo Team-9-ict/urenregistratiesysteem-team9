@@ -1,45 +1,34 @@
 function searchTable() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
+    let val = document.getElementById("searchInput").value.toLowerCase();
     let rows = document.querySelectorAll("#employeeTable tbody tr");
-
-    rows.forEach(row => {
-        let text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? "" : "none";
-    });
-}
-
-function generatePDF() {
-    const element = document.getElementById('pdf-content');
-    const options = {
-        margin: 10,
-        filename: 'medewerkers_gop3.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-    };
-    html2pdf().set(options).from(element).save();
+    rows.forEach(r => r.style.display = r.innerText.toLowerCase().includes(val) ? "" : "none");
 }
 
 function toggleForm() {
-    const form = document.getElementById('addForm');
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-}
-
-function searchTable() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let rows = document.querySelectorAll("#employeeTable tbody tr");
-    rows.forEach(row => {
-        let text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? "" : "none";
-    });
+    const form = document.getElementById("addForm");
+    if (form.style.display === "none") {
+        form.style.display = "block";
+    } else {
+        form.style.display = "none";
+    }
 }
 
 function generatePDF() {
-    const element = document.getElementById('pdf-content');
-    html2pdf().from(element).set({
-        margin: 10,
-        filename: 'medewerkers.pdf',
-        html2canvas: { scale: 2 },
+    const el = document.getElementById('pdf-content');
+    const pdfStyle = document.createElement('style');
+    pdfStyle.id = 'pdf-fix';
+    pdfStyle.innerHTML = `
+        .action-cell, .action-cell-flex { display: none !important; }
+        #pdf-content { background: white !important; color: black !important; padding: 10px; }
+        table { width: 100% !important; border: 1px solid #ccc !important; }
+        td, th { color: black !important; border-bottom: 1px solid #ccc !important; padding: 8px !important; }
+    `;
+    document.head.appendChild(pdfStyle);
+
+    html2pdf().set({
+        margin: 10, 
+        filename: 'export.pdf', 
+        html2canvas: { scale: 2, backgroundColor: '#ffffff' },
         jsPDF: { orientation: 'landscape' }
-    }).save();
+    }).from(el).save().then(() => document.getElementById('pdf-fix').remove());
 }

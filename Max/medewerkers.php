@@ -2,20 +2,25 @@
 include 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $voornaam = $_POST['voornaam'];
-    $tussenvoegsel = $_POST['tussenvoegsel'];
-    $achternaam = $_POST['achternaam'];
-    $geboortedatum = $_POST['geboortedatum'];
-    $functie = $_POST['functie'];
-    $werkmail = $_POST['werkmail'];
-    $kantoor = $_POST['kantoor'];
+    $v = $conn->real_escape_string($_POST['voornaam']);
+    $t = $conn->real_escape_string($_POST['tussenvoegsel']);
+    $a = $conn->real_escape_string($_POST['achternaam']);
+    $g = $conn->real_escape_string($_POST['geboortedatum']);
+    $f = $conn->real_escape_string($_POST['functie']);
+    $m = $conn->real_escape_string($_POST['werkmail']);
+    $k = $conn->real_escape_string($_POST['kantoor']);
 
+    // Let op: Ik gebruik hier 'Kantoorruimte', check of dit klopt met je database!
     $sql = "INSERT INTO medewerkers (Voornaam, Tussenvoegsel, Achternaam, Geboortedatum, Functie, Werkmail, Kantoorruimte) 
-            VALUES ('$voornaam', '$tussenvoegsel', '$achternaam', '$geboortedatum', '$functie', '$werkmail', '$kantoor')";
+            VALUES ('$v', '$t', '$a', '$g', '$f', '$m', '$k')";
     
-    $conn->query($sql);
-    header("Location: medewerkers.php");
-    exit();
+    if ($conn->query($sql)) {
+        header("Location: medewerkers.php");
+        exit();
+    } else {
+        // Dit laat zien wat er mis gaat
+        die("Fout in database: " . $conn->error);
+    }
 }
 ?>
 
@@ -23,16 +28,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>GOP3 | Medewerkers</title>
+    <title>Max | Medewerkers Beheer</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <span class="logo">TEAM9 <strong>URSysteem</strong></span>
+            <span class="logo">TEAM9 <strong>Medewerkers</strong></span>
             <div class="nav-links">
-                <a href="#">Dashboard</a>
+                <a href="../Hub/index.php">Dashboard</a>
                 <a href="medewerkers.php" class="active">Medewerkers</a>
             </div>
         </div>
@@ -40,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container">
         <div class="header-section">
-            <h1>Medewerkers</h1>
+            <h1>Medewerkers Beheer</h1>
             <div class="action-buttons">
                 <button onclick="toggleForm()" class="btn-secondary">Nieuwe Medewerker</button>
                 <button onclick="generatePDF()" class="btn-primary">Export PDF</button>
@@ -65,10 +70,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="table-card">
             <div class="table-header">
-                <input type="text" id="searchInput" placeholder="Filter op naam, functie of mail..." onkeyup="searchTable()">
+                <input type="text" id="searchInput" placeholder="Filter op naam, functie, mail of kantoor..." onkeyup="searchTable()">
             </div>
-            
-            <div id="pdf-content">
+
+            <div id="pdf-content" style="overflow-x: auto;">
                 <table id="employeeTable">
                     <thead>
                         <tr>
@@ -78,29 +83,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <th>Functie</th>
                             <th>Werkmail</th>
                             <th>Kantoor</th>
-                            <th>Acties</th>
+                            <th class="action-cell">Acties</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $sql = "SELECT * FROM medewerkers";
                         $result = $conn->query($sql);
-                        while($row = $result->fetch_assoc()) {
-                            $volledigeNaam = trim($row["Voornaam"] . " " . $row["Tussenvoegsel"] . " " . $row["Achternaam"]);
-                            echo "<tr>
-                                    <td><strong>" . $row["ID"] . "</strong></td>
-                                    <td>" . $volledigeNaam . "</td>
-                                    <td>" . $row["Geboortedatum"] . "</td>
-                                    <td><span class='badge'>" . $row["Functie"] . "</span></td>
-                                    <td>" . $row["Werkmail"] . "</td>
-                                    <td>" . $row["Kantoorruimte"] . "</td>
-                                    <td>
-                                        <div class='action-cell'>
-                                            <a href='edit.php?id=" . $row["ID"] . "' class='btn-edit'>Wijzig</a>
-                                            <a href='delete.php?id=" . $row["ID"] . "' class='btn-delete' onclick='return confirm(\"Weet je het zeker?\")'>Wis</a>
-                                        </div>
-                                    </td>
-                                  </tr>";
+                        if ($result && $result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $volledigeNaam = trim($row["Voornaam"] . " " . $row["Tussenvoegsel"] . " " . $row["Achternaam"]);
+                                echo "<tr>
+                                        <td><strong>" . $row["ID"] . "</strong></td>
+                                        <td>" . $volledigeNaam . "</td>
+                                        <td>" . $row["Geboortedatum"] . "</td>
+                                        <td><span class='badge'>" . $row["Functie"] . "</span></td>
+                                        <td>" . $row["Werkmail"] . "</td>
+                                        <td>" . $row["Kantoorruimte"] . "</td>
+                                        <td class='action-cell'>
+                                            <div class='action-cell-flex'>
+                                                <a href='edit.php?id=" . $row["ID"] . "' class='btn-edit'>Wijzig</a>
+                                                <a href='delete.php?id=" . $row["ID"] . "' class='btn-delete' onclick='return confirm(\"Weet je het zeker?\")'>Wis</a>
+                                            </div>
+                                        </td>
+                                      </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' style='text-align:center;'>Geen medewerkers gevonden</td></tr>";
                         }
                         $conn->close();
                         ?>
