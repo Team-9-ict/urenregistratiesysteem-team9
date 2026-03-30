@@ -79,27 +79,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_device'])) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $sql = "SELECT * FROM apparatuur";
-                        $result = $conn->query($sql);
-                        while($row = $result->fetch_assoc()) {
-                            echo "<tr>
-                                    <td><strong>" . $row["id"] . "</strong></td>
-                                    <td>" . $row["apparaat_naam"] . "</td>
-                                    <td>" . $row["serienummer"] . "</td>
-                                    <td>" . $row["type"] . "</td>
-                                    <td>" . $row["aanschafdatum"] . "</td>
-                                    <td><span class='badge'>" . $row["status"] . "</span></td>
-                                    <td>
-                                        <div class='action-cell'>
-                                            <a href='edit.php?id=" . $row["id"] . "' class='btn-edit'>Wijzig</a>
-                                            <a href='delete.php?id=" . $row["id"] . "' class='btn-delete' onclick='return confirm(\"Zeker weten?\")'>Wis</a>
-                                        </div>
-                                    </td>
-                                  </tr>";
-                        }
-                        ?>
-                    </tbody>
+    <?php
+    $sql = "SELECT * FROM apparatuur";
+    $result = $conn->query($sql);
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td><strong>" . $row["id"] . "</strong></td>
+                <td>" . $row["apparaat_naam"] . "</td>
+                <td>" . $row["serienummer"] . "</td>
+                <td>" . $row["type"] . "</td>
+                <td>" . $row["aanschafdatum"] . "</td>
+                <td><span class='badge'>" . $row["status"] . "</span></td>
+                <td>
+                    <div class='action-cell'>
+                        <a href='edit.php?id=" . $row["id"] . "' class='btn-edit'>Wijzig</a>
+                        <a href='delete.php?id=" . $row["id"] . "' class='btn-delete' onclick='return confirm(\"Zeker weten?\")'>Wis</a>
+                    </div>
+                </td>
+              </tr>";
+    }
+    ?>
+</tbody>
                 </table>
             </div>
         </div>

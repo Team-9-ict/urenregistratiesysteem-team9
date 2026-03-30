@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root"; 
 $pass = "";     
-$db   = "werkapparatuur"; 
+$db   = "werkapparatuur"; // Check of dit exact de naam is in phpMyAdmin
 
 $conn = new mysqli($host, $user, $pass, $db);
 

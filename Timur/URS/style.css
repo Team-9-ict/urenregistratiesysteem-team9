@@ -269,3 +269,61 @@ button {
     font-weight: 600;
     display: inline-block;
 }
+/* --- PDF / Print Export Instellingen --- */
+/* Speciale klasse voor de PDF export */
+.light-pdf {
+    background-color: white !important;
+    color: black !important;
+}
+
+.light-pdf :not(.badge) {
+    color: black !important;
+}
+
+.light-pdf table, 
+.light-pdf th, 
+.light-pdf td {
+    border: 1px solid black !important;
+    color: black !important;
+    background-color: white !important;
+}
+
+.light-pdf .badge {
+    border: 1px solid black !important;
+    color: black !important;
+    background: transparent !important;
+}
+@media print {
+    #pdf-content, #pdf-content * {
+        background-color: white !important;
+        color: black !important;
+    }
+    
+    .badge {
+        border: 1px solid black !important;
+        background: none !important;
+        color: black !important;
+    }
+
+    .action-cell, .btn-edit, .btn-delete {
+        display: none !important;
+    }
+}
+/* --- EXTRA FORCE VOOR PDF --- */
+@media print {
+    #pdf-content, #pdf-content * {
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .badge {
+        background-color: transparent !important;
+        color: black !important;
+        border: 1px solid black !important;
+    }
+
+    /* Verberg knoppen op de PDF */
+    .action-cell, .btn-edit, .btn-delete, .action-buttons, .table-header {
+        display: none !important;
+    }
+}

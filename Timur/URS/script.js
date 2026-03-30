@@ -10,12 +10,31 @@ function searchTable() {
 
 function generatePDF() {
     const element = document.getElementById('pdf-content');
-    html2pdf().from(element).set({
+    
+    // Forceer alle tekst in de tabel tijdelijk naar zwart
+    const items = element.querySelectorAll('*');
+    items.forEach(item => {
+        item.style.setProperty('color', 'black', 'important');
+    });
+
+    const opt = {
         margin: 10,
         filename: 'apparatuur_overzicht.pdf',
-        html2canvas: { scale: 2 },
-        jsPDF: { orientation: 'landscape' }
-    }).save();
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 2, 
+            backgroundColor: '#ffffff', 
+            useCORS: true 
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Zet de kleuren weer terug naar normaal na de export
+        items.forEach(item => {
+            item.style.color = '';
+        });
+    });
 }
 
 function toggleForm() {
