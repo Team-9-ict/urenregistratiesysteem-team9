@@ -15,9 +15,6 @@
     <ul class="nav-links">
         <li><a href="index.php">Home</a></li>
         <li><a href="facturen.php">Facturen</a></li>
-        <li><a href="opdrachten.php">Opdrachten</a></li>
-        <li><a href="medewerkers.php">Medewerkers</a></li>
-        <li><a href="uren.php">Urenregistratie</a></li>
     </ul>
 </nav>
 
